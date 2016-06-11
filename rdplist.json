@@ -1,0 +1,1 @@
+{"config": {"width": "1800", "fullscreen": "no", "height": "950", "console": "yes", "drive": "home,/home"}, "lists": [{"targets": [{"name": "some host", "user": "username", "domain": "somedomain", "ip": "127.0.0.1", "password": "secretpassword"}], "listname": "change rdplist.json"}]}
