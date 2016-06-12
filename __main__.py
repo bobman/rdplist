@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-from rdplist import *
+from rdplist import RDPList
 from functools import partial
 
 class App:
@@ -9,10 +9,9 @@ class App:
     self.frame = ttk.Frame(master)
     self.frame.grid()
     ttk.Style().configure("TFrame", background="#ccc")
-    ttk.Style().configure("TLabel", background="#ccc", foreground="#080")
-    ttk.Style().configure("TButton", padding=6, relief="flat", background="#ccc", foreground="#000")
+    ttk.Style().configure("TLabel", background="#ccc", foreground="#000")
+    ttk.Style().configure("TButton", padding=6, relief="raised", background="#ccc", foreground="#000")
     self.rdp = RDPList()
-    self.rdp.load_json()
     self.make_buttons()
 
   def make_buttons(self):
@@ -32,9 +31,10 @@ class App:
     self.rdp.start_rdp(target)
 
 def main():
-	root = Tk()
-	app = App(root)
-	root.mainloop()
-	
+  root = Tk()
+  app = App(root)
+  root.title("RDPList")
+  root.mainloop()
+  
 if __name__ == '__main__':
-	main()
+  main()

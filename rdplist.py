@@ -5,16 +5,19 @@ class RDPList:
 
 	configFilename="rdplist.json"
 
+	def __init__(self):
+		self.load_json()
+
 	def test_json(self):
 		for list in self.config['lists']:
 			print(list['listname'])
 
 	def create_json(self):
 		tempConfig={"config":{
-			"fullscreen":"no",
+			"fullscreen":False,
 			"width":"1800",
     	"height":"950",
-    	"console":"yes",
+    	"console":True,
     	"drive":"home,/home"
 		},"lists":[
 			{
@@ -43,20 +46,25 @@ class RDPList:
 			self.config = json.load(data_file)
 
 	def start_rdp(self,target,fullscreen=False,freerdp=True):
-		if(freerdp):
-			if(fullscreen):
-				my_command='xfreerdp'+" /u:"+target['user']+" /d:"+target['domain']+" /p:"+target['password']+" /admin /cert-ignore /drive:home,/home/bobman /f /v:"+target['ip']+' &'
-			else:
-				my_command='xfreerdp'+" /u:"+target['user']+" /d:"+target['domain']+" /p:"+target['password']+" /admin /cert-ignore /drive:home,/home/bobman /w:1800 /h:950 /v:"+target['ip']+' &'
+		options = "/u:"+target['user']+" /d:"+target['domain']+" /p:"+target['password']+" /v:"+target['ip']+" /cert-ignore /t:\""+target['name']+"\" /compression"
+		
+		if(self.config['config']['fullscreen']):
+			options = options + " /f"
 		else:
-			if(fullscreen):
-				my_command='rdesktop'+" -u"+target['user']+" -d"+target['domain']+" -p"+target['password']+" -0 -r disk:home=/home/bobman/ -f "+target['ip']+'>/dev/null 2>&1 &'
-			else:
-				my_command='rdesktop'+" -u"+target['user']+" -d"+target['domain']+" -p"+target['password']+" -0 -r disk:home=/home/bobman/ -g1800x950 "+target['ip']+'>/dev/null 2>&1 &'
+			options = options + " /w:"+self.config['config']['width']+" /h:"+self.config['config']['height']
+
+		if(self.config['config']['console']):
+			options = options + " /admin"
+
+		if(self.config['config']['drive']!=""):
+			options = options + " /drive"+self.config['config']['drive']
+		
+		my_command='xfreerdp '+options+' &'
+		
 		print(my_command)
 		os.system(my_command)
 
 if __name__ == '__main__':
 	rdp = RDPList()
-	rdp.load_json()
+	#rdp.load_json()
 	rdp.test_json()
