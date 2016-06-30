@@ -46,7 +46,7 @@ class RDPList:
 			self.config = json.load(data_file)
 
 	def start_rdp(self,target,fullscreen=False,freerdp=True):
-		options = "/u:"+target['user']+" /d:"+target['domain']+" /p:"+target['password']+" /v:"+target['ip']+" /cert-ignore /t:\""+target['name']+"\" /compression"
+		options = "/u:"+target['user']+" /d:"+target['domain']+" /p:"+target['password']+" /v:"+target['ip']+" /cert-ignore /t:\""+target['name']+"\" /compression /clipboard"
 		
 		if(self.config['config']['fullscreen']):
 			options = options + " /f"
