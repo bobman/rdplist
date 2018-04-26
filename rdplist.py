@@ -51,15 +51,15 @@ class RDPList:
 		if(self.config['config']['fullscreen']):
 			options = options + " /f"
 		else:
-			options = options + " /w:"+self.config['config']['width']+" /h:"+self.config['config']['height']
+			options = options + "  /disp /dynamic-resolution /w:"+self.config['config']['width']+" /h:"+self.config['config']['height']
 
 		if(self.config['config']['console']):
 			options = options + " /admin"
 
 		if(self.config['config']['drive']!=""):
-			options = options + " /drive"+self.config['config']['drive']
+			options = options + " /drive:"+self.config['config']['drive']
 		
-		my_command='xfreerdp '+options+' &'
+		my_command='/opt/freerdp-nightly/bin/xfreerdp '+options+' &'
 		
 		print(my_command)
 		os.system(my_command)
